@@ -6,9 +6,13 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Profile
 from .serializers import ProfileSerializer
+from .utils import get_age_group
 
-@api_view(['POST'])
+@api_view(['GET', 'POST'])
 def create_profile(request):
+    if request.method == 'GET':
+        return get_profiles(request._request)
+
     name = request.data.get('name')
 
     if not name:
